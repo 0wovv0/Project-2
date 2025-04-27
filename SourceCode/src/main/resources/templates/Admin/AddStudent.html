@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Additional Problem</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/CSS/addProblemStyle.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap">
+    <script src="/JS/addProblemJS.js" defer></script>
+    <link rel="stylesheet" href="/CSS/UserStyle.css">
+    <style>
+        .highlight {
+            color: #8a2be2; /* Màu tím nhạt (thistle) */
+        }
+        .remove-btn {
+            color: red;
+        }
+
+
+    </style>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .container {
+            margin-top: 100px; /* Điều chỉnh margin-top nếu cần để phần tử không bị navbar che mất */
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #UserName{
+            align-items: center
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="menu">
+        <i class="bx bx-menu" onclick="toggleMenu(true)"></i>
+    </div>
+    <nav>
+        <ul id="NavItems" class="nav-links">
+            <li class="nav-link"><a href="/admin">Home</a><div></div></li>
+            <li class="nav-link"><a href="foo">Problems</a><div></div></li>
+            <li class="nav-link"><a href="/classes">Contest</a><div></div></li>
+            <li class="nav-link"><a href="foo">Discuss</a><div></div></li>
+            <li class="nav-link"><a href="foo">Interview</a><div></div></li>
+            <li class="nav-link"><a href="teaching">Teaching</a><div></div></li>
+        </ul>
+    </nav>
+    <div class="info">
+        <div class="notification">
+            <i class="bx bx-bell"></i>
+            <div>1</div>
+        </div>
+        <p id="UserName">Pham Viet Hung</p>
+        <i class="bx bx-circle" id="logout-icon"></i>
+    </div>
+</div>
+<div class="sidebar" id="sidebar">
+    <i class="bx bx-x" onclick="toggleMenu(false)"></i>
+    <ul id="SideItems" class="side-links">
+        <li class="nav-link"><a href="/user">Home</a><div></div></li>
+        <li class="nav-link"><a href="foo">Problems</a><div></div></li>
+        <li class="nav-link"><a href="/classes">Contest</a><div></div></li>
+        <li class="nav-link"><a href="foo">Discuss</a><div></div></li>
+        <li class="nav-link"><a href="foo">Interview</a><div></div></li>
+        <li class="nav-link">
+            <a href="/teaching">Teaching</a><div></div>
+        </li>
+    </ul>
+</div>
+<div class="container">
+    <div class="content" id="content">
+        <div class="table-view">
+            <div class="table-view-header">
+                <h1>Problems</h1>
+                <div class="search-box">
+                    <input type="text" id="problem-search-box" class="search-txt" placeholder="Type to search">
+                    <label class="search-btn" for="problem-search-box">
+                        <i class="bx bx-search"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="problemsTable">
+                    <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Action</th> <!-- Thêm cột Action -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Sử dụng Thymeleaf để lặp qua danh sách problems -->
+                    <tr th:each="item : ${students}">
+                        <td th:text="${item.Email}" th:class="${existStudents.contains(item) ? 'highlight' : ''}"></td>
+                        <td th:text="${item.Name}" th:class="${existStudents.contains(item) ? 'highlight' : ''}"></td>
+                        <td>
+                            <!-- Sử dụng Thymeleaf để xác định hành động dựa trên sự tồn tại của item trong existStudents -->
+                            <span th:if="${existStudents.contains(item)}"
+                                  class="action-btn remove-btn" title="Remove from class"
+                                  style="color: red; cursor: pointer;"
+                                  th:attr="onclick='updateProblemStatus(\'' + ${item.Email} + '\', \'remove\')'">
+                                <i class="bx bx-minus"></i>
+                            </span>
+                            <span th:unless="${existStudents.contains(item)}"
+                                  class="action-btn add-btn" title="Add to class"
+                                  style="color: green; cursor: pointer;"
+                                  th:attr="onclick='updateProblemStatus(\'' + ${item.Email} + '\', \'add\')'">
+                                <i class="bx bx-plus"></i>
+                            </span>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script th:inline="javascript">
+    classID = [[${classID}]];
+    function updateProblemStatus(problemID, action) {
+        const url = action === 'add' ? "/addProblemToClass" : "/removeProblemFromClass";
+        const payload = {
+            problemID,
+            classID
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Request failed');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log(data); // Log response data for debugging
+
+                // Hiển thị alert thành công
+                alert("Thao tác thành công: " + data);
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Đã xảy ra lỗi trong quá trình thực hiện thao tác.");
+            });
+        console.log(classID);
+    }
+</script>
+
+
+
+<script>
+    // JavaScript để lắng nghe sự kiện click và điều hướng
+    document.getElementById('logout-icon').addEventListener('click', function() {
+        window.location.href = '/logout'; // Đường dẫn tới trang logout
+    });
+</script>
+
+<script>
+    hello = [[${Hello}]]
+</script>
+</body>
+</html>

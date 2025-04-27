@@ -1,0 +1,1 @@
+Contains only one single integer denoting the total amount of golds of selected warehouses.

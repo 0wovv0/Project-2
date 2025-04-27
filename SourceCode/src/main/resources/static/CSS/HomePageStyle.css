@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--background-color);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    position: fixed;
+    z-index: 2;
+}
+
+.menu, .info {
+    align-items: center;
+}
+
+.menu {
+    display: none;
+}
+
+.menu i {
+    font-size: 1.5rem;
+    color: var(--font-light-color);
+    cursor: pointer;
+}
+
+.nav-links {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-link {
+    margin: 0 1rem;
+    cursor: pointer;
+    display: inline-block; /* Thêm dòng này để hiển thị các liên kết trên cùng một dòng */
+}
+
+
+.nav-link a {
+    color: var(--font-light-color);
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.nav-link a:hover {
+    color: var(--primary-color);
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease-in-out;
+    margin-bottom: 20px; /* Thêm margin-bottom cho nút "Get Started" */
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: -20px; /* Loại bỏ khoảng cách cuối cùng */
+}
+
+.feature {
+    width: calc(50% - 20px);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.feature i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+
+
+
+.banner {
+    height: 400px; /* Thay đổi chiều cao của banner tùy theo nội dung */
+    background-image: url('/image/img.png'); /* Thay thế bằng URL hình ảnh của bạn */
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.banner-content {
+    padding: 3rem 1rem; /* Giảm padding của phần banner-content */
+    color: #fff; /* Thêm màu chữ cho phần nội dung */
+}
+
+
+.banner-content h1 {
+    margin-bottom: 1rem;
+}
+
+.banner-content p {
+    color: var(--font-light-color);
+    margin-bottom: 2rem;
+}
+
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+footer p {
+    font-size: 0.9rem;
+}

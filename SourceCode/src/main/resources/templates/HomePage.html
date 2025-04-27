@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Clone - Home</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap' rel='stylesheet'>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="/CSS/HomePageStyle.css" rel="stylesheet">
+    <link href="/CSS/UserStyle.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <div class="menu">
+            <i class="bx bx-menu" onclick="toggleMenu(true)"></i>
+        </div>
+        <nav>
+            <ul id="NavItems" class="nav-links">
+                <li class="nav-link"><a href="/user">Home</a><div></div></li>
+                <li class="nav-link"><a href="foo">Problems</a><div></div></li>
+                <li class="nav-link"><a href="/classes">Contest</a><div></div></li>
+                <li class="nav-link"><a href="foo">Discuss</a><div></div></li>
+                <li class="nav-link"><a href="foo">Interview</a><div></div></li>
+            </ul>
+
+        </nav>
+        <div class="info">
+            <div class="notification">
+                <i class="bx bx-bell"></i>
+                <div>1</div>
+            </div>
+            <p>Pham Viet Hung</p>
+            <i class="bx bx-circle" id="logout-icon"></i>
+        </div>
+    </div>
+</header>
+
+<section class="banner">
+    <div class="banner-content">
+        <h1>Welcome to CodeWin</h1>
+        <p>Practice coding and prepare for interviews with our problems and contests.</p>
+        <a href="/user" class="btn">Get Started</a>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature">
+        <i class="bx bx-code-alt"></i>
+        <h2>Problems</h2>
+        <p>Solve coding problems across various difficulty levels.</p>
+    </div>
+    <div class="feature">
+        <i class="bx bx-trophy"></i>
+        <h2>Contests</h2>
+        <p>Participate in coding contests and improve your rankings.</p>
+    </div>
+    <div class="feature">
+        <i class="bx bx-chat"></i>
+        <h2>Discuss</h2>
+        <p>Join discussions and collaborate with the community.</p>
+    </div>
+    <div class="feature">
+        <i class="bx bx-briefcase"></i>
+        <h2>Interviews</h2>
+        <p>Prepare for interviews with our curated questions and solutions.</p>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 LeetCode Clone. All rights reserved.</p>
+</footer>
+<script src="/JS/homePageJS.js" defer></script>
+    <script>
+        // JavaScript để lắng nghe sự kiện click và điều hướng
+        document.getElementById('logout-icon').addEventListener('click', function() {
+        window.location.href = '/logout'; // Đường dẫn tới trang logout
+    });
+</script>
+</body>
+</html>

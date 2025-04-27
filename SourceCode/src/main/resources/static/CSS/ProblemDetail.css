@@ -1,0 +1,389 @@
+html,
+body {
+    font-family     : Arial, sans-serif;
+    margin          : 0;
+    padding         : 0;
+    display         : flex;
+    height          : 100vh;
+    overflow        : hidden;
+    background-color: #f8f9fa;
+    width           : 100%;
+    height          : 100%;
+}
+
+.container {
+    display       : flex;
+    flex-direction: column;
+    width         : 100%;
+    height        : 100%;
+}
+
+.body {
+    display       : flex;
+    flex-direction: row;
+    width         : 100%;
+    height        : 100%;
+}
+
+.left-header {
+    display       : flex;
+    flex-direction: row;
+    width         : 100%;
+}
+
+.header {
+    display         : flex;
+    justify-content : space-between;
+    align-items     : center;
+    width           : 100%;
+    background-color: #dbd8e3;
+}
+
+.contest-info {
+    display    : flex;
+    align-items: center;
+    margin     : 20px;
+    flex       : 1.5;
+}
+
+
+
+.contest-name {
+    margin-right: 20px;
+    /* Khoảng cách giữa tên contest và nút */
+}
+
+
+.split {
+    height  : 100%;
+    border-radius: 15px; /* Bo cong các góc */
+}
+
+.left {
+    width           : 50%;
+    background-color: #ffffff;
+    box-shadow      : 0 0 10px rgba(0, 0, 0, 0.1);
+    padding         : 20px;
+    position        : relative;
+    overflow: auto;
+}
+
+.right {
+    width         : 50%;
+    display       : flex;
+    flex-direction: column;
+    padding       : 20px;
+}
+
+.resize-bar {
+    width           : 10px;
+    background-color: #ddd;
+}
+
+.problem-title {
+    font-size      : 24px;
+    font-weight    : bold;
+    padding        : 10px 0;
+    position       : sticky;
+    /* Safari */
+    top            : 0;
+    z-index        : 10;
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    flex           : 2;
+}
+
+.timer-controls {
+    display    : flex;
+    align-items: center;
+}
+
+.fas.fa-clock {
+    margin-right: 10px;
+}
+
+#timer {
+    font-size   : 16px;
+    color       : #333;
+    margin-right: 10px;
+}
+
+#timer-btn {
+    border-radius: 15px;
+    padding  : 5px 10px;
+    font-size: 14px;
+    cursor   : pointer;
+    display: flex; /* Sử dụng flexbox */
+    justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+    align-items: center;
+}
+
+.description {
+    margin-top: 20px;
+}
+
+.section {
+    margin-top: 30px;
+}
+
+.section h3 {
+    font-size    : 20px;
+    margin-bottom: 10px;
+}
+
+pre {
+    background-color: #f1f1f1;
+    padding         : 10px;
+    border-radius   : 5px;
+    overflow-x      : auto;
+    display         : flex;
+    flex-direction  : column;
+}
+
+.timer-btn {
+    width: 25px; /* Đặt chiều rộng của nút */
+    height: 25px; /* Đặt chiều cao của nút */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer-icon {
+    font-size: 1.2rem; /* Đặt kích thước của biểu tượng */
+}
+
+.contest-info button {
+    background-color: #D8BFD8; /* Màu nền tím nhẹ */
+    color: white; /* Màu chữ */
+    padding: 10.5px 22.4px; /* Đệm giảm 30% */
+    text-align: center; /* Căn giữa chữ */
+    text-decoration: none; /* Không gạch chân */
+    display: inline-block;
+    font-size: 11.2px; /* Kích thước chữ giảm 30% */
+    margin: 2.8px 1.4px; /* Margin giảm 30% */
+    cursor: pointer;
+    border-radius: 5px; /* Bo cong */
+}
+
+.contest-info button:hover {
+    background-color: #C6AEC7; /* Màu nền tím nhẹ hơn khi di chuột qua */
+}
+
+.contest-info .icon-btn::after
+{
+    content: ""; /* Khởi tạo nội dung rỗng */
+    position: absolute; /* Đặt vị trí tuyệt đối */
+    opacity: 0; /* Đặt độ trong suốt ban đầu là 0 */
+    transition: .5s; /* Thời gian chuyển đổi khi hover */
+}
+
+.contest-info button.next:hover::after {
+    content: "Bài kế"; /* Hiển thị văn bản khi hover */
+    opacity: 1; /* Đặt độ trong suốt khi hover là 1 */
+}
+
+.contest-info button.prev:hover::after {
+    content: "Bài trước"; /* Hiển thị văn bản khi hover */
+    opacity: 1; /* Đặt độ trong suốt khi hover là 1 */
+}
+
+
+/*.code-editor {*/
+/*    flex         : 1;*/
+/*    margin       : 20px;*/
+/*    border       : 1px solid #ddd;*/
+/*    border-radius: 5px;*/
+/*    padding      : 10px;*/
+/*}*/
+
+.submit-section {
+    text-align: center;
+    padding   : 20px;
+    border-top: 1px solid #ddd;
+}
+
+.hidden {
+    display: none;
+}
+.visible {
+    display: block;
+}
+
+.submit-btn,
+.upload-btn {
+    background-color: #4CAF50;
+    color           : white;
+    padding         : 10px 20px;
+    border          : none;
+    border-radius   : 5px;
+    cursor          : pointer;
+    font-size       : 16px;
+    margin-top      : 10px;
+}
+
+.submit-btn:hover,
+.upload-btn:hover {
+    background-color: #45a049;
+}
+
+.language-select {
+    margin-bottom: 10px;
+}
+
+.language-select label {
+    margin-right: 10px;
+}
+
+.table-container {
+    max-height: 65vh;
+    overflow-y: scroll;
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+
+        tr {
+            &:hover {
+                background: var(--secondary-color);
+            }
+        }
+
+        th {
+            background: var(--background-dark-grey);
+            color: var(--white-color);
+            padding: 1rem;
+            font-size: 1rem;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 1rem;
+            font-size: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+
+            max-width: 400px;
+            word-wrap: break-word;
+
+            a, div {
+                font-size: 0.8rem;
+            }
+        }
+    }
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 800px;
+    max-height: 80%; /* Limit pop-up height to 80% of viewport */
+    overflow: auto; /* Enable scroll for entire popup */
+    background-color: #fff;
+    padding: 20px;
+    border: 3px solid #ccc; /* Độ dày và màu sắc của đường viền */
+    border-radius: 10px; /* Bo cong viền */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.popup-content {
+    font-family: Arial, Helvetica, sans-serif; /* Thiết lập font chữ */
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Arrange content vertically */
+}
+
+.input-pane, .output-pane {
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Bottom border to separate sections */
+    overflow-y: auto; /* Enable vertical scrollbar */
+}
+
+.output-pane {
+    display: flex;
+    flex-direction: row; /* Arrange output and expected output horizontally */
+}
+
+.left-pane, .right-pane {
+    width: 50%;
+    padding: 10px;
+    border-right: 1px solid #ccc; /* Right border to separate sections */
+}
+
+.scrollable-content {
+    /* No specific max-height here, so content will determine height */
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+
+
+h2 {
+    margin-top: 0;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô */
+}
+
+
+
+
+.table-container th, .table-container td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Đường viền dưới cho các ô của bảng */
+}
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    cursor: pointer;
+}
+
+/* Bảng */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+thead, tbody {
+    border-bottom: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Đường kẻ ngang giữa các hàng */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Đường kẻ ngang giữa các ô */
+td, th {
+    border-right: 1px solid #ddd;
+}
+
+th:last-child, td:last-child {
+    border-right: none;
+}

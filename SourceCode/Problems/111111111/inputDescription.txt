@@ -1,0 +1,2 @@
+Line 1 contains n, L1, and L2 (1≤n≤1000000,1≤L1≤L2≤n)
+Line 2 contains n integers \(a_1, a_2, ..., a_n\)

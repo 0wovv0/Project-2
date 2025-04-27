@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problem Description - LeetCode Clone</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.11.0/beautify-html.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/dracula.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/addon/hint/show-hint.min.css">
+  <!-- <script src="script.js"></script> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/theme/darcula.min.css">
+  <!-- Thay "darcula" bằng theme bạn muốn sử dụng -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/clike/clike.min.js"></script>
+  <!-- Nhúng MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <link rel="stylesheet" href="/CSS/ProblemDetail.css">
+
+  <style>
+    .CodeMirror {
+      height: min(70vh, 450px);
+      width: 100%;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="contest-info">
+      <button id="restore">Mô tả</button>
+      <button onclick="displayD()">TestCase</button>
+      <button class="icon-btn" onclick="prevProblem()"><i class="fas fa-arrow-left"></i></button>
+      <button class="icon-btn" onclick="nextProblem()"><i class="fas fa-arrow-right"></i></button>
+    </div>
+    <div class="problem-title">
+
+    </div>
+  </div>
+
+  <div class="body">
+
+    <div class="split left visible" id="content">
+      <h1 th:text="'Problem: ' + ${problem.problemEntity.name}"></h1>
+
+      <div class="description">
+        <p th:text="'Description: ' + ${problem.problemEntity.description}"></p>
+      </div>
+      <div th:each="example, i : ${problem.problemEntity.examples}" class="section">
+        <h3 th:text="'Example ' + ${i.index + 1} + ':'"></h3>
+        <pre>
+            <div><strong class="example-label">Input:</strong></div> <div class="example-value" th:text="${example.input}"></div><br>
+            <div><strong class="example-label">Output:</strong></div> <div class="example-value" th:text="${example.output}"></div>
+        </pre>
+      </div>
+
+      <div class="section">
+        <h2>Constraint:</h2>
+        <ul>
+          <!-- Sử dụng vòng lặp Thymeleaf để tạo danh sách -->
+          <li th:each="line : ${problem.problemEntity.constraints.split('\n')}">
+            <span th:text="${line}"></span>
+          </li>
+        </ul>
+      </div>
+      <div class="section">
+        <h3>Note:</h3>
+        <p>The input and output format is for the convenience of running the tests, you don't need to match it in your
+          implementation.</p>
+
+      </div>
+    </div>
+    <div class="split left hidden" id="new-content"></div>
+
+    <div class="resize-bar" id="resize-bar"></div>
+
+    <div class="split right">
+      <textarea class="code-editor" id="code-editor" placeholder="Write your code here..."></textarea>
+
+    </div>
+  </div>
+
+</div>
+<div class="popup" id="popup">
+  <span class="close-btn" onclick="closePopup()">X</span>
+  <button class="copy-btn" onclick="copyInput()">Copy</button>
+  <div class="popup-content">
+    <div class="input-pane" id="inputPane">
+      <h2>Input</h2>
+      <div class="scrollable-content" id="inputContent">
+        <!-- Content from item.input will be inserted here -->
+      </div>
+    </div>
+    <div class="output-pane">
+      <div class="left-pane" id="leftPane">
+        <h2>Output</h2>
+        <div class="scrollable-content" id="outputContent">
+          <!-- Content from item.output will be inserted here -->
+        </div>
+      </div>
+      <div class="right-pane" id="rightPane">
+        <h2>Expected Output</h2>
+        <div class="scrollable-content" id="expectedOutputContent">
+          <!-- Content from item.expectedOutput will be inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<script src="/JS/ProblemDetailJS.js"></script>-->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    Prism.highlightAll();
+  });
+
+  var editor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+    lineNumbers: true, // Hiển thị số dòng
+    mode: "text/x-c++src", // Chọn ngôn ngữ C++
+    theme: "darcula", // Chọn chủ đề (theme) cho CodeMirror
+    extraKeys: { "Ctrl-Space": "autocomplete" } // Phím tắt để kích hoạt tính năng gợi ý
+  });
+</script>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var submit = [[${submit}]];
+  var problem = [[${problem}]];
+  console.log(submit);
+  console.log(problem);
+  editor.setValue(submit.source);
+
+  if (submit.results != null) {
+    displayProblemDetail(submit.results);
+  }
+  /*]]>*/
+</script>
+
+<script>
+  function switch2Content(){
+    displayProblemDetail(submit.results);
+    document.getElementById("content").classList.toggle("hidden");
+    document.getElementById("new-content").classList.toggle("hidden");
+  }
+  editor.setValue(submit.source);
+  if (submit.results != null) {
+    displayProblemDetail(submit.results);
+  }
+</script>
+<script>
+  function displayProblemDetail(data) {
+    var newContentElement = document.getElementById('new-content');
+    if (!newContentElement) return;
+
+    // Xóa nội dung cũ của 'new-content'
+    newContentElement.innerHTML = '';
+
+    // Tạo bảng
+    var tableContainer = document.createElement('div');
+    tableContainer.classList.add('table-container');
+
+    var table = document.createElement('table');
+    var thead = document.createElement('thead');
+    var tbody = document.createElement('tbody');
+
+    // Tạo header của bảng
+    var headerRow = document.createElement('tr');
+    var headers = ['Show detail', 'Accepted', 'Running Time'];
+
+    headers.forEach(headerText => {
+      var th = document.createElement('th');
+      th.textContent = headerText;
+      headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Tạo các hàng dữ liệu
+    data.forEach(item => {
+      var row = document.createElement('tr');
+
+      // Ô ID
+      var idCell = document.createElement('td');
+      idCell.textContent = "Details";
+      idCell.style.cursor = 'pointer';
+      idCell.addEventListener('click', function() {
+        openPopup(item.input, item.output, item.expectedOutput);
+      });
+      row.appendChild(idCell);
+
+      var acceptedCell = document.createElement('td');
+      acceptedCell.textContent = item.accepted;
+      acceptedCell.style.color = item.accepted === 'ACCEPTED' ? 'green' : 'red';
+      row.appendChild(acceptedCell);
+
+      var languageCell = document.createElement('td');
+      languageCell.textContent = item.runningTime;
+      row.appendChild(languageCell);
+
+      tbody.appendChild(row);
+
+      // Thêm đường kẻ ngang cho hàng
+      row.style.borderBottom = '1px solid #ddd';
+    });
+
+    table.appendChild(tbody);
+    tableContainer.appendChild(table);
+
+    // Thêm tableContainer vào newContentElement
+    newContentElement.appendChild(tableContainer);
+  }
+
+</script>
+
+
+</body>
+
+</html>

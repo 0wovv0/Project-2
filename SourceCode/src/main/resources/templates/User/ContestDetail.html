@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pham Viet Hung - 20215390</title>
+    <link rel="stylesheet" href="/CSS/UserStyle.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap">
+    <script src="/JS/ContestDetailJS.js" defer></script>
+    <script src="/JS/SortAndSearchJS.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <div class="navbar">
+        <div class="menu">
+            <i class="bx bx-menu" onclick="toggleMenu(true)"></i>
+        </div>
+        <nav>
+            <ul id="NavItems" class="nav-links">
+                <li class="nav-link"><a href="/user">Home</a><div></div></li>
+                <li class="nav-link"><a href="foo">Problems</a><div></div></li>
+                <li class="nav-link"><a href="/classes">Contest</a><div></div></li>
+                <li class="nav-link"><a href="foo">Discuss</a><div></div></li>
+                <li class="nav-link"><a href="foo">Interview</a><div></div></li>
+                <li class="nav-link"><a href="foo">Store</a><div></div></li>
+            </ul>
+        </nav>
+        <div class="info">
+            <div class="notification">
+                <i class="bx bx-bell"></i>
+                <div>1</div>
+            </div>
+            <p>Pham Viet Hung</p>
+            <i class="bx bx-circle"></i>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <i class="bx bx-x" onclick="toggleMenu(false)"></i>
+        <ul id="SideItems" class="side-links">
+            <li class="nav-link"><a href="/user">Home</a><div></div></li>
+            <li class="nav-link"><a href="foo">Problems</a><div></div></li>
+            <li class="nav-link"><a href="/classes">Contest</a><div></div></li>
+            <li class="nav-link"><a href="foo">Discuss</a><div></div></li>
+            <li class="nav-link"><a href="foo">Interview</a><div></div></li>
+            <li class="nav-link"><a href="foo">Store</a><div></div></li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="table-view">
+            <div class="table-view-header">
+                <h1>Problems</h1>
+                <div class="search-box">
+                    <input type="text" id="search-box" class="search-txt" placeholder="Type to search">
+                    <label class="search-btn" for="search-box">
+                        <i class="bx bx-search"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Created By</th>
+                        <th>Created At</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Sử dụng Thymeleaf để lặp qua danh sách problems -->
+                    <tr th:each="item : ${classList}">
+                        <td><a th:href="@{/classID(id=${item.id})}" th:text="${item.name}"></a></td>
+                        <td th:text="${item.status}"></td>
+                        <td th:text="${item.createdBy}"></td>
+                        <td th:text="${item.createdAt}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

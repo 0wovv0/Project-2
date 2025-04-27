@@ -1,0 +1,78 @@
+.container {
+    max-width: 800px; /* Giảm kích thước form */
+    margin: 0 auto; /* Căn giữa form */
+    padding: 20px; /* Khoảng cách bên trong form */
+    border-radius: 10px; /* Bo cong góc của viền */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+    background-color: #fff; /* Màu nền trắng */
+}
+
+.example-group,
+.testcase-group {
+    margin-bottom: 20px; /* Khoảng cách dưới */
+    padding: 15px; /* Khoảng cách bên trong */
+    border-radius: 10px; /* Bo cong góc */
+    border: 1px solid #ddd; /* Viền màu xám nhạt */
+    background-color: #f9f9f9; /* Màu nền nhạt */
+}
+.highlight {
+    color: #8a2be2; /* Màu tím nhạt (thistle) */
+}
+.remove-btn {
+    color: red;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.container {
+    margin-top: 100px; /* Điều chỉnh margin-top nếu cần để phần tử không bị navbar che mất */
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#UserName{
+    align-items: center
+}
+
+.example-group label,
+.testcase-group label {
+    font-weight: 600; /* Đậm nhạt chữ */
+}
+
+.btn-primary,
+.btn-danger {
+    border-radius: 5px; /* Bo cong nút */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Màu nền nút */
+    border-color: #007bff; /* Màu viền nút */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Màu nền nút */
+    border-color: #dc3545; /* Màu viền nút */
+}
+
+.form-control {
+    border-radius: 5px; /* Bo cong input */
+}
+
+h2 {
+    margin-bottom: 20px; /* Khoảng cách dưới */
+}

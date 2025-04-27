@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pham Viet Hung - 20215390</title>
+    <link rel="stylesheet" href="/CSS/UserStyle.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap">
+    <script src="/JS/ContestDetailJS.js" defer></script>
+<!--    <script src="/JS/SortAndSearchJS.js" defer></script>-->
+</head>
+<body>
+
+<div class="container">
+    <div class="navbar">
+        <div class="menu">
+            <i class="bx bx-menu" onclick="toggleMenu(true)"></i>
+        </div>
+        <nav>
+            <ul id="NavItems" class="nav-links">
+                <li class="nav-link"><a href="/user">Home</a><div></div></li>
+                <li class="nav-link"><a href="foo">Problems</a><div></div></li>
+                <li class="nav-link"><a href="/classes">Contest</a><div></div></li>
+                <li class="nav-link"><a href="foo">Discuss</a><div></div></li>
+                <li class="nav-link"><a href="foo">Interview</a><div></div></li>
+                <li class="nav-link"><a href="foo">Store</a><div></div></li>
+            </ul>
+        </nav>
+        <div class="info">
+            <div class="notification">
+                <i class="bx bx-bell"></i>
+                <div>1</div>
+            </div>
+            <p>Pham Viet Hung</p>
+            <i class="bx bx-circle"></i>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <i class="bx bx-x" onclick="toggleMenu(false)"></i>
+        <ul id="SideItems" class="side-links">
+            <li class="nav-link"><a href="/user">Home</a><div></div></li>
+            <li class="nav-link"><a href="foo">Problems</a><div></div></li>
+            <li class="nav-link"><a href="/classes">Contest</a><div></div></li>
+            <li class="nav-link"><a href="foo">Discuss</a><div></div></li>
+            <li class="nav-link"><a href="foo">Interview</a><div></div></li>
+            <li class="nav-link">
+                <a href="/teaching">Teaching</a><div></div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="export-button">
+            <button id="export-button">Export</button>
+        </div>
+        <div class="table-view-container">
+            <div class="table-view">
+                <div class="table-view-header">
+                    <h1>Problems</h1>
+                    <div class="search-box">
+                        <input type="text" id="problem-search-box" class="search-txt" placeholder="Type to search">
+                        <label class="search-btn" for="problem-search-box">
+                            <i class="bx bx-search"></i>
+                        </label>
+                        <button class="add-icon" onclick="addProblem()">
+                            <i class='bx bx-plus'></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Level</th>
+                            <th>Tags</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Sử dụng Thymeleaf để lặp qua danh sách problems -->
+                        <tr th:each="item : ${problems}">
+                            <td>
+                                <a th:href="@{/showProblemDetail(id=${item.id})}"
+                                   th:text="${item.name}"></a>
+                            </td>
+                            <td th:text="${item.level}"></td>
+                            <td th:text="${item.tags}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Add the Student table here -->
+            <div class="table-view">
+                <div class="table-view-header">
+                    <h1>Students</h1>
+                    <div class="search-box">
+                        <input type="text" id="student-search-box" class="search-txt" placeholder="Type to search">
+                        <label class="search-btn" for="student-search-box">
+                            <i class="bx bx-search"></i>
+                        </label>
+                        <button class="add-icon" onclick="addStudent()">
+                            <i class='bx bx-plus'></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="students-table">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Number of Accept</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Sử dụng Thymeleaf để lặp qua danh sách students -->
+                        <tr th:each="student : ${students}">
+                            <td th:text="${student.email}"></td>
+                            <td th:text="${student.name}"></td>
+                            <td th:text="${student.numberOfAccept}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Đoạn HTML cho bảng Submissions -->
+        <div class="table-view">
+            <div class="table-view-header">
+                <h1>Submittion</h1>
+                <div class="search-box">
+                    <input type="text" id="submission-search-box" class="search-txt" placeholder="Type to search">
+                    <label class="search-btn" for="submission-search-box">
+                        <i class="bx bx-search"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="submissions-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Accepted</th>
+                        <th>Language</th>
+                        <th>Submitted At</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Sử dụng Thymeleaf để lặp qua danh sách submissions -->
+                    <tr th:each="submission : ${submits}">
+                        <td><a th:href="@{/showSubmitDetail(id=${submission.id}, problemID=${submission.problem_id})}" th:text="${submission.id}"></a></td>
+                        <td th:text="${submission.user.email}"></td>
+                        <td th:text="${submission.accepted}"></td>
+                        <td th:text="${submission.language}"></td>
+                        <td th:text="${submission.submitted_at}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+<style>
+
+    /* Định dạng container của bảng */
+    .table-view-container {
+        display: flex;
+        gap: 20px; /* Khoảng cách giữa hai bảng */
+    }
+
+    /* Định dạng từng bảng */
+    .table-view {
+        flex: 1;
+    }
+
+    .table-container {
+        overflow-x: auto; /* Thêm thanh cuộn ngang nếu cần */
+    }
+
+    /* Điều chỉnh các yếu tố khác theo ý muốn */
+
+
+    .search-box {
+        display: flex;
+        align-items: center;
+    }
+    .table-view-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .add-icon {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 10px; /* Khoảng cách bên trái */
+        font-size: 24px; /* Cỡ biểu tượng */
+        color: #4CAF50; /* Màu biểu tượng */
+    }
+
+    .add-icon:hover {
+        color: #45a049; /* Màu biểu tượng khi hover */
+    }
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
+
+<script th:inline="javascript">
+    classID = [[${classID}]]; // Đảm bảo rằng giá trị này được render đúng
+    console.log(classID);
+
+    function addProblem() {
+        window.location.href = '/addNewProblem?id=' + classID; // Thay đổi cú pháp để thêm giá trị id vào URL
+    }
+
+    function addStudent() {
+        window.location.href = '/addStudent?id=' + classID; // Thay đổi cú pháp để thêm giá trị id vào URL
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const exportButton = document.getElementById('export-button');
+        const sampleTable = document.getElementById('submissions-table');
+
+        exportButton.addEventListener('click', function() {
+            const table = sampleTable.cloneNode(true);
+            const rows = Array.from(table.querySelectorAll('tr'));
+
+            // Remove unnecessary rows (e.g., <th> in thead)
+            rows.forEach(row => {
+                if (row.querySelector('th')) {
+                    row.remove();
+                }
+            });
+
+            const wb = XLSX.utils.table_to_book(table, {sheet: "Sheet JS"});
+            XLSX.writeFile(wb, 'sample_table.xlsx');
+        });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const problemSearchBox = document.getElementById('problem-search-box');
+        const studentSearchBox = document.getElementById('student-search-box');
+
+        // Function to handle sorting
+        const sortTable = (tableId, columnIndex) => {
+            const table = document.getElementById(tableId);
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            // Toggle sorting direction
+            const asc = table.classList.contains('asc');
+            rows.sort(comparer(columnIndex, asc));
+            table.classList.toggle('asc');
+
+            // Re-append sorted rows to tbody
+            rows.forEach(row => tbody.appendChild(row));
+        };
+
+        // Function to compare cell values
+        const getCellValue = (row, index) => {
+            const cellValue = row.children[index].textContent.trim();
+            return isNaN(cellValue) ? cellValue.toLowerCase() : parseFloat(cellValue);
+        };
+
+        // Function to compare rows based on column index and sort order
+        const comparer = (index, asc) => (a, b) => {
+            const valueA = getCellValue(a, index);
+            const valueB = getCellValue(b, index);
+
+            return asc ? (valueA > valueB ? 1 : -1) : (valueA < valueB ? 1 : -1);
+        };
+
+        // Sort table when header is clicked
+        document.querySelectorAll('th').forEach((th, index) => {
+            th.addEventListener('click', () => {
+                const table = th.closest('table');
+                const tableId = table.id;
+                const columnIndex = Array.from(th.parentNode.children).indexOf(th);
+
+                sortTable(tableId, columnIndex);
+            });
+        });
+
+        // Search functionality for Problems table
+        problemSearchBox.addEventListener('input', function() {
+            const query = problemSearchBox.value.toLowerCase();
+            const rows = document.querySelectorAll('#problems-table tbody tr');
+
+            rows.forEach(row => {
+                const problemName = row.querySelector('td:nth-child(1) a').textContent.toLowerCase();
+                row.style.display = problemName.includes(query) ? '' : 'none';
+            });
+        });
+
+        // Search functionality for Students table
+        studentSearchBox.addEventListener('input', function() {
+            const query = studentSearchBox.value.toLowerCase();
+            const rows = document.querySelectorAll('#students-table tbody tr');
+
+            rows.forEach(row => {
+                const studentName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                row.style.display = studentName.includes(query) ? '' : 'none';
+            });
+        });
+    });
+
+</script>
+</html>

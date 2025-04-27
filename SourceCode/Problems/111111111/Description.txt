@@ -1,0 +1,14 @@
+The Kingdom ALPHA has n warehouses of golds located on a straight line and are numbered 1, 2,..., n. The warehouse i has amount of \(a_i\) (\(a_i\) is non-negative integer) and is located at coordinate i (i=1,...,n). The King of ALPHA opens a competition for hunters who are responsible to find a subset of gold warehouses having largest total amount of golds with respect to the condition that the distance between two selected warehouses must be greater than or equal to L1 and less than or equal to L2.
+\[
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+\]
+
+The sum of the squares of the first \(n\) integers is:
+\[
+\sum_{i=1}^{n} i^2 = \frac{n(n+1)(2n+1)}{6}
+\]
+
+The sum of a general quadratic expression:
+\[
+\sum_{i=1}^{n} (i^2 + 2i + 1)
+\]

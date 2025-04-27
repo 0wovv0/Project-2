@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Additional Problem</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/CSS/addProblemStyle.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap">
+    <script src="/JS/addProblemJS.js" defer></script>
+    <link rel="stylesheet" href="/CSS/UserStyle.css">
+    <style>
+        .highlight {
+            color: #8a2be2; /* Màu tím nhạt (thistle) */
+        }
+        .remove-btn {
+            color: red;
+        }
+
+
+    </style>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .container {
+            margin-top: 100px; /* Điều chỉnh margin-top nếu cần để phần tử không bị navbar che mất */
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #UserName{
+            align-items: center
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="menu">
+        <i class="bx bx-menu" onclick="toggleMenu(true)"></i>
+    </div>
+    <nav>
+        <ul id="NavItems" class="nav-links">
+            <li class="nav-link"><a href="/admin">Home</a><div></div></li>
+            <li class="nav-link"><a href="foo">Problems</a><div></div></li>
+            <li class="nav-link"><a href="/classes">Contest</a><div></div></li>
+            <li class="nav-link"><a href="foo">Discuss</a><div></div></li>
+            <li class="nav-link"><a href="foo">Interview</a><div></div></li>
+            <li class="nav-link"><a href="teaching">Teaching</a><div></div></li>
+        </ul>
+    </nav>
+    <div class="info">
+        <div class="notification">
+            <i class="bx bx-bell"></i>
+            <div>1</div>
+        </div>
+        <p id="UserName">Pham Viet Hung</p>
+        <i class="bx bx-circle" id="logout-icon"></i>
+    </div>
+</div>
+<div class="sidebar" id="sidebar">
+    <i class="bx bx-x" onclick="toggleMenu(false)"></i>
+    <ul id="SideItems" class="side-links">
+        <li class="nav-link"><a href="/user">Home</a><div></div></li>
+        <li class="nav-link"><a href="foo">Problems</a><div></div></li>
+        <li class="nav-link"><a href="/classes">Contest</a><div></div></li>
+        <li class="nav-link"><a href="foo">Discuss</a><div></div></li>
+        <li class="nav-link"><a href="foo">Interview</a><div></div></li>
+        <li class="nav-link">
+            <a href="/teaching">Teaching</a><div></div>
+        </li>
+    </ul>
+</div>
+<div class="container">
+
+    <h2>Additional Problem</h2>
+    <button id="toggleButton" class="btn btn-secondary" onclick="toggleView()">Danh sách Problems</button>
+
+    <!-- Form View -->
+    <div id="formView">
+        <form id="problemForm" th:action="@{/addProblem}" th:object="${problem}" method="post" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="name">Problem Name:</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" th:field="*{description}" rows="6" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="input">Input Description:</label>
+                <textarea class="form-control" id="input" th:field="*{input}" rows="6" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="output">Output Description:</label>
+                <textarea class="form-control" id="output" th:field="*{output}" rows="6" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="constraints">Constraints:</label>
+                <textarea class="form-control" id="constraints" th:field="*{constraints}" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="level">Level:</label>
+                <select class="form-control" id="level" th:field="*{level}" required>
+                    <option value="">-- Select Level --</option>
+                    <option value="EASY">EASY</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="HARD">HARD</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="tags">Tags:</label>
+                <select class="form-control" id="tags" th:field="*{tags}" required>
+                    <option value="">-- Select Tag --</option>
+                    <option value="DYNAMIC_PROGRAMMING">Dynamic Programming</option>
+                    <option value="DEQUE">Deque</option>
+                    <option value="STACK">Stack</option>
+                    <option value="QUEUE">Queue</option>
+                    <option value="BACK_TRACKING">Backtracking</option>
+                    <option value="GREEDY">Greedy</option>
+                    <option value="DIVIDE_CONQUER">Divide and Conquer</option>
+                    <option value="NPHARD">NP-Hard</option>
+                </select>
+            </div>
+
+            <!-- Examples -->
+            <div id="examplesContainer">
+                <div th:each="example, exampleStat : *{examples}" class="example-group">
+                    <div class="form-group">
+                        <label th:for="${'exampleInput_' + exampleStat.index}">Example Input:</label>
+                        <textarea class="form-control example-input" th:field="*{examples[__${exampleStat.index}__].input}" rows="2" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="${'exampleOutput_' + exampleStat.index}">Example Output:</label>
+                        <textarea class="form-control example-output" th:field="*{examples[__${exampleStat.index}__].output}" rows="2" required></textarea>
+                    </div>
+
+                    <button type="button" class="btn btn-danger" onclick="deleteExample(this)">- Delete Example</button>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="addExample()">+ Add Example</button>
+
+            <!-- Testcases -->
+            <div id="testcasesContainer">
+                <div th:each="testcase, testcaseStat : *{testcaseList}" class="testcase-group">
+                    <div class="form-group">
+                        <label th:for="${'testcaseInput_' + testcaseStat.index}">Testcase Input:</label>
+                        <textarea class="form-control testcase-input" th:field="*{testcaseList[__${testcaseStat.index}__].input}" rows="2" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="${'testcaseOutput_' + testcaseStat.index}">Testcase Output:</label>
+                        <textarea class="form-control testcase-output" th:field="*{testcaseList[__${testcaseStat.index}__].output}" rows="2" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="${'testcaseValidTime_' + testcaseStat.index}">Valid Time Running:</label>
+                        <input type="number" class="form-control testcase-valid-time" th:field="*{testcaseList[__${testcaseStat.index}__].validTimeRunning}" required>
+                    </div>
+
+                    <button type="button" class="btn btn-danger" onclick="deleteTestcase(this)">- Delete Testcase</button>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="addTestcase()">+ Add Testcase</button>
+
+
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </div>
+
+    <!-- Table View -->
+    <div class="content hidden" id="content">
+        <div class="table-view">
+            <div class="table-view-header">
+                <h1>Problems</h1>
+                <div class="search-box">
+                    <input type="text" id="problem-search-box" class="search-txt" placeholder="Type to search">
+                    <label class="search-btn" for="problem-search-box">
+                        <i class="bx bx-search"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="problemsTable">
+                    <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Level</th>
+                        <th>Tags</th>
+                        <th>Action</th> <!-- Thêm cột Action -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Sử dụng Thymeleaf để lặp qua danh sách problems -->
+                    <tr th:each="item : ${problems}">
+                        <td th:class="${existProblems.contains(item) ? 'highlight' : ''}">
+                            <a th:href="@{/showProblem(id=${item.id})}"
+                               th:text="${item.name}"></a>
+                        </td>
+                        <td th:text="${item.level}" th:class="${existProblems.contains(item) ? 'highlight' : ''}"></td>
+                        <td th:text="${item.tags}" th:class="${existProblems.contains(item) ? 'highlight' : ''}"></td>
+                        <td>
+                            <!-- Sử dụng Thymeleaf để xác định hành động dựa trên sự tồn tại của item trong existProblems -->
+                            <span th:if="${existProblems.contains(item)}"
+                                  class="action-btn remove-btn" title="Remove from class"
+                                  style="color: red; cursor: pointer;"
+                                  th:attr="onclick='updateProblemStatus(\'' + ${item.id} + '\', \'remove\')'">
+                                <i class="bx bx-minus"></i>
+                            </span>
+                            <span th:unless="${existProblems.contains(item)}"
+                                  class="action-btn add-btn" title="Add to class"
+                                  style="color: green; cursor: pointer;"
+                                  th:attr="onclick='updateProblemStatus(\'' + ${item.id} + '\', \'add\')'">
+                                <i class="bx bx-plus"></i>
+                            </span>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script th:inline="javascript">
+    classID = [[${classID}]];
+    function updateProblemStatus(problemID, action) {
+            const url = action === 'add' ? "/addProblemToClass" : "/removeProblemFromClass";
+            const payload = {
+                problemID,
+                classID
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Request failed');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data); // Log response data for debugging
+
+                    // Hiển thị alert thành công
+                    alert("Thao tác thành công: " + data);
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Đã xảy ra lỗi trong quá trình thực hiện thao tác.");
+                });
+        console.log(classID);
+    }
+</script>
+
+
+<script>
+    function toggleView() {
+        const formView = document.getElementById('formView');
+        const tableView = document.getElementById('content');
+        const toggleButton = document.getElementById('toggleButton');
+        if (formView.classList.contains('hidden')) {
+            formView.classList.remove('hidden');
+            tableView.classList.add('hidden');
+            toggleButton.textContent = 'Thêm Problem';
+        } else {
+            formView.classList.add('hidden');
+            tableView.classList.remove('hidden');
+            toggleButton.textContent = 'Switch to Form View';
+        }
+    }
+</script>
+<script>
+    // JavaScript để lắng nghe sự kiện click và điều hướng
+    document.getElementById('logout-icon').addEventListener('click', function() {
+        window.location.href = '/logout'; // Đường dẫn tới trang logout
+    });
+</script>
+</body>
+</html>
